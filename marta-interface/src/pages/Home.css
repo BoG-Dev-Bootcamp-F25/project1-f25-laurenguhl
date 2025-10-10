@@ -1,0 +1,60 @@
+.home-container {
+    width: 100vw; /* 100% of the viewport width */
+  height: 100vh; /* 100% of the viewport height */
+  margin: 0; /* Remove default body margin */
+  padding: 0; /* Remove default body padding */
+  font-family: Arial, sans-serif;
+}
+
+.home-header {
+  position: relative;
+  text-align: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.home-title {
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+.about-link {
+  text-decoration: none;
+  color: #ccc;
+  font-weight: bold;
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.home-main {
+  padding : 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.routes-section {
+  width: 40%;
+}
+
+.route-links {
+  display: flex;
+  flex-direction: column;
+}
+
+.route-item {
+  text-decoration: none;
+  color: #ccc;
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+
+.image-section img {
+    padding: 10px;
+    max-width: 650px;
+    height: auto;
+}
