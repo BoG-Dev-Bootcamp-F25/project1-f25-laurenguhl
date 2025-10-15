@@ -4,7 +4,7 @@ export default function Train({ train }: { train: any }) {
     <div
       style={{
         border: "1px solid gray",
-        padding: "10px",
+        paddingLeft: "15px",
         borderRadius: "5px",
         marginBottom: "5px",
         display: "flex",

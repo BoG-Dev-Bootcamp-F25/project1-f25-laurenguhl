@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import NavBar from "../components/NavBar";
+import NavBar from "../components/Navbar";
 import TrainList from "../components/TrainList";
+import "./LinesPage.css";
 
 export default function LinesPage() {
   const { lineColor } = useParams<{ lineColor: string }>();
@@ -12,9 +13,9 @@ export default function LinesPage() {
   const [stationData, setStationData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedStation, setSelectedStation] = useState<string | null>(null);
-  const [activeFilters, setActiveFilters] = useState<string[]>([]);
+  const [direction, setDirection] = useState<string | null>(null);
+  const [status, setStatus] = useState<string | null>(null);
 
-  // Fetch data when the color changes
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
@@ -37,39 +38,104 @@ export default function LinesPage() {
         setLoading(false);
       }
     }
-
     fetchData();
   }, [lineColor]);
 
-  // // Apply filters to train data
-  // const filteredTrains = trainData.filter((train) => {
-  //   let matches = true;
-
-  //   // Filter by selected station
-  //   if (selectedStation) {
-  //     matches = matches && train.STATION === selectedStation;
-  //   }
-
-  //   // Filter by active buttons
-  //   activeFilters.forEach((filter) => {
-  //     if (filter === "Arriving") matches = matches && train.WAITING_TIME === "Arriving";
-  //     if (filter === "Scheduled") matches = matches && train.WAITING_TIME !== "Arriving";
-  //     if (filter === "Northbound") matches = matches && train.DIRECTION === "N";
-  //     if (filter === "Southbound") matches = matches && train.DIRECTION === "S";
-  //     if (filter === "Eastbound") matches = matches && train.DIRECTION === "E";
-  //     if (filter === "Westbound") matches = matches && train.DIRECTION === "W";
-  //   });
-
-  //   return matches;
-  // });
-
   if (loading) return <div>Loading...</div>;
 
+  const getLineColor = (line: string) => {
+    switch (line) {
+      case "gold":
+        return "#D4AF37";
+      case "red":
+        return "#c62828";
+      case "green":
+        return "#2e7d32";
+      case "blue":
+        return "#1565c0";
+      default:
+        return "#333";
+    }
+  };
+
+  const filteredTrains = trainData.filter((train) => {
+    const trainStatus = train.WAITING_TIME === "0 min" ? "Arriving" : "Scheduled";
+    
+    return (
+      (!selectedStation || train.HEAD_SIGN === selectedStation.toUpperCase()) &&
+      (!direction || train.DIRECTION === direction) &&
+      (!status || trainStatus === status)
+    );
+  });
+
   return (
-    // </div>
-    <div className = "flex-container" style = {{display: "flex", gap: "20px", padding: "20px"}}>
-      <NavBar stations={stationData} />
-      <TrainList trains={trainData} />
+    <div className="lines-page">
+      {/* HEADER SECTION */}
+      <header className="line-header">
+        <nav className="line-nav">
+          <div className="line-links">
+            {["gold", "red", "green", "blue"].map((line) => (
+              <Link
+                key={line}
+                to={`/lines/${line}`}
+                className={`line-button ${line}-line`}
+                style={{ backgroundColor: getLineColor(line) }}
+              >
+                {line.charAt(0).toUpperCase() + line.slice(1)} Line
+              </Link>
+            ))}
+          </div>
+        </nav>
+
+        <div className="line-title">
+          <h1>{(lineColor ?? "").toUpperCase()} LINE</h1>
+        </div>
+      </header>
+
+      {/* MAIN SECTION */}
+      <div className="lines-main">
+        {/* Left column: station list */}
+        <div className="station-column">
+          <NavBar
+            stations={stationData}
+            selectedStation={selectedStation}
+            onSelectStation={(s) => setSelectedStation(s)}
+          />
+        </div>
+
+        {/* Right column: filters + train list */}
+        <div className="train-column">
+          <div className="filters">
+            {/* Direction Buttons */}
+            {lineColor === "green" || lineColor === "blue" ? (
+              <>
+                <button 
+                  className={direction === "E" ? "active" : ""}
+                  onClick={() => setDirection(direction === "E" ? null : "E")}>Eastbound</button>
+                <button 
+                  className={direction === "W" ? "active" : ""}
+                  onClick={() => setDirection(direction === "W" ? null : "W")}>Westbound</button>
+              </>
+            ) : (
+              <>
+                <button 
+                  className={direction === "N" ? "active" : ""}
+                  onClick={() => setDirection(direction === "N" ? null : "N")}>Northbound</button>
+                <button 
+                  className={direction === "S" ? "active" : ""}
+                  onClick={() => setDirection(direction === "S" ? null : "S")}>Southbound</button>
+              </>
+            )}
+            <button 
+              className={status === "Arriving" ? "active" : ""}
+              onClick={() => setStatus(status === "Arriving" ? null : "Arriving")}>Arriving</button>
+            <button 
+              className={status === "Scheduled" ? "active" : ""}
+              onClick={() => setStatus(status === "Scheduled" ? null : "Scheduled")}>Scheduled</button>
+          </div>
+          <TrainList trains={filteredTrains} />
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,0 +1,114 @@
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
+/* ===== Overall Page Layout ===== */
+.lines-page {
+  width: 96vw;
+  padding: 0;
+}
+
+/* ===== Header Section ===== */
+.line-header {
+  width: 100%;
+  padding: 12px 0;
+  text-align: center;
+}
+
+.line-links {
+  display: flex;
+  gap: 12px;
+  padding: 0 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Each line button */
+.line-button {
+  flex: 1;
+  margin: 0 6px;
+  padding: 6px;
+  border-radius: 5px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
+  transition: opacity 0.2s;
+}
+
+.line-button:hover {
+  opacity: 0.8;
+}
+
+.line-title {
+  margin-top: 30px;
+}
+
+.line-title h1 {
+  margin: 0;
+  font-size: 28px;
+  letter-spacing: 1px;
+}
+
+/* ===== Main Section ===== */
+.lines-main {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  align-items: flex-start;
+}
+
+/* Station list (left column) */
+.station-column {
+  width: 220px;
+  flex: 0 0 220px;
+}
+
+/* Train list (right column) */
+.train-column {
+  flex: 1;
+}
+
+/* Filters section */
+.filters {
+  border: 1px solid gray;
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+.filters button {
+  border: none;
+  background: #eee;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: black;
+}
+
+.filters button:hover {
+  background: #ddd;
+}
+
+button.active {
+  background-color: #4e4e4e;
+  color: white;
+}
+
+/* Optional line color classes (you can use these instead of inline bg) */
+.gold-line {
+  background-color: #d4af37;
+}
+.red-line {
+  background-color: #c62828;
+}
+.green-line {
+  background-color: #2e7d32;
+}
+.blue-line {
+  background-color: #1565c0;
+}
