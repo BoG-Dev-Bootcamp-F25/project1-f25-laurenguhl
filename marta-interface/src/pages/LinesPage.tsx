@@ -41,6 +41,13 @@ export default function LinesPage() {
     fetchData();
   }, [lineColor]);
 
+  // Clear UI selections when the selected line changes so stale filters don't hide all trains
+  useEffect(() => {
+    setSelectedStation(null);
+    setDirection(null);
+    setStatus(null);
+  }, [lineColor]);
+
   if (loading) return <div>Loading...</div>;
 
   const getLineColor = (line: string) => {

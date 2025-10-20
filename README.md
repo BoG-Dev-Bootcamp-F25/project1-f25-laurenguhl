@@ -4,6 +4,10 @@
 
 In this project, you'll be creating a frontend that graphically displays train information with filtering options. Using your React knowledge, you will implement hooks, props, and state management in this Marta Interface!
 
+## Video Walkthrough
+
+Watch my video walkthrough [here](https://youtu.be/ZIon3xtg8lg).
+
 ## Setting Up
 
 - Fork this repository, set the owner to BoG-Dev-Bootcamp-F25, and name it `project1-f25-yourname`
